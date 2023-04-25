@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello World!"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ViewAnimator
+        android:id="@+id/sample_output"
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:layout_weight="1" />
+
+    <ListView
+        android:id="@+id/action_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?android:attr/textColorHighlightInverse"
+        android:textColor="#357438" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/ll_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!--        <TextView-->
+            <!--            android:id="@+id/tv_message"-->
+            <!--            android:layout_width="match_parent"-->
+            <!--            android:layout_height="wrap_content"-->
+            <!--            android:text="" />-->
+            <LinearLayout
+                android:layout_marginBottom="@dimen/cardview_default_radius"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/edit_text_out"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:id="@+id/button_send"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="send" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+
+    <!--    <LinearLayout-->
+    <!--        style="@style/Animation.Design.BottomSheetDialog"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:orientation="horizontal" >-->
+
+    <!--        <EditText-->
+    <!--            android:id="@+id/edit_text_out"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_gravity="bottom"-->
+    <!--            android:layout_weight="1" />-->
+
+    <!--        <Button-->
+    <!--            android:id="@+id/button_send"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:text="send" />-->
+    <!--    </LinearLayout>-->
+    <!--    <RelativeLayout-->
+    <!--        android:layout_width="100dp"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        android:layout_weight="1">-->
+
+    <!--        <EditText-->
+    <!--            android:id="@+id/et_message"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="match_parent"-->
+    <!--            android:layout_marginTop="5dp"-->
+    <!--            android:layout_marginBottom="5dp"-->
+    <!--            android:layout_weight="1"-->
+
+    <!--            android:inputType="textPassword"-->
+    <!--            android:maxLength="3"-->
+    <!--            android:textColor="@color/black" />-->
+
+    <!--        <Button-->
+    <!--            android:id="@+id/btn_send"-->
+    <!--            android:layout_width="110dp"-->
+    <!--            android:layout_height="match_parent"-->
+    <!--            android:layout_alignParentEnd="true" />-->
+    <!--    </RelativeLayout>-->
+
+
+</LinearLayout>

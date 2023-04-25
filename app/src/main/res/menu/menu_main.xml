@@ -1,0 +1,40 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.bluetoothapplication.MainActivity">
+    <item
+        android:id="@+id/enable_visiblity"
+        android:orderInCategory="100"
+        android:title="enable_visiblity"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/find_device"
+        android:orderInCategory="100"
+        android:title="find_device"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/bonded_device"
+        android:orderInCategory="100"
+        android:title="bonded_device"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/listening"
+        android:orderInCategory="100"
+        android:title="listening"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/stop_listening"
+        android:orderInCategory="100"
+        android:title="stop_listening"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/disconnect"
+        android:orderInCategory="100"
+        android:title="disconnect"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/say_hello"
+        android:orderInCategory="100"
+        android:title="say_hello"
+        app:showAsAction="never" />
+</menu>
