@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
     private int REQUEST_CODE = 0;
     private ListView mListView;
     private TextView tv_message;
+    private TextView tv_state;
     private EditText edit_text_out;
     private Button button_send;
     private DeviceAdapter mAdapter;
@@ -100,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("MissingPermission")
     private final BroadcastReceiver mHeadsetReceiver2 = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -123,8 +125,11 @@ public class MainActivity extends AppCompatActivity {
                     showToast("ACTION_FOUND");
                     Log.d("BroadcastReceiver", "ACTION_FOUND");
                     BluetoothDevice remoteDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                    mDeviceList.add(remoteDevice);
-                    mAdapter.notifyDataSetChanged();
+                    if (remoteDevice.getBondState() != BluetoothDevice.BOND_BONDED) {
+
+                        mDeviceList.add(remoteDevice);
+                        mAdapter.notifyDataSetChanged();
+                    }
                     break;
                 case BluetoothAdapter.ACTION_SCAN_MODE_CHANGED:
                     showToast("ACTION_SCAN_MODE_CHANGED");
@@ -210,6 +215,7 @@ public class MainActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progress_bar);
         ll_message = findViewById(R.id.ll_message);
         button_send = findViewById(R.id.button_send);
+        tv_state = findViewById(R.id.tv_state);
         edit_text_out = findViewById(R.id.edit_text_out);
         button_send.setOnClickListener(sendClick);
     }
@@ -245,7 +251,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean openBluetooth() {
         if (permissionsUtil.checkPermissions()) {
             Log.d("----  !!!! openBluetooth  --------", "openBluetooth");
-            if (defaultAdapter==null||!defaultAdapter.isEnabled()) {
+            if (defaultAdapter == null || !defaultAdapter.isEnabled()) {
                 Log.d("----  !!!! defaultAdapter.isEnabled()  --------", "openBluetooth");
                 Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                 mGetContent.launch(enableBtIntent);
@@ -278,10 +284,10 @@ public class MainActivity extends AppCompatActivity {
             Manifest.permission.BLUETOOTH})
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if( !permissionsUtil.openPermissions()){
+        if (!permissionsUtil.openPermissions()) {
             return false;
         }
-        if( !openBluetooth()){
+        if (!openBluetooth()) {
             return false;
         }
 
@@ -311,22 +317,25 @@ public class MainActivity extends AppCompatActivity {
                 mAcceptThread.cancel();
             }
             mAcceptThread = new AcceptThread(mController.getmAdapter(), handler);
+            showToast("等待連接.....");
             mAcceptThread.start();
         } else if (id == R.id.stop_listening) {
             if (mAcceptThread != null) {
                 mAcceptThread.cancel();
-            }
-        } else if (id == R.id.disconnect) {
-            if (mAcceptThread != null) {
-                mAcceptThread.cancel();
-            }
-        } else if (id == R.id.say_hello) {
-            try {
-                say("HELLO");
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
+                showToast(" stop 連接.....");
             }
         }
+//        else if (id == R.id.disconnect) {
+//            if (mAcceptThread != null) {
+//                mAcceptThread.cancel();
+//            }
+//        } else if (id == R.id.say_hello) {
+//            try {
+//                say("HELLO");
+//            } catch (UnsupportedEncodingException e) {
+//                e.printStackTrace();
+//            }
+//        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -362,7 +371,16 @@ public class MainActivity extends AppCompatActivity {
         @SuppressLint("MissingPermission")
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
+            System.out.println("bindDeviceClick: " + view.getId());
+
+            System.out.println("bindDeviceClick: " + view.getTransitionName());
+
+//            System.out.println("bindDeviceClick: " + view.());
+
             BluetoothDevice device = mDeviceList.get(position);
+            System.out.println("bindDeviceClick: " + device.getName());
             /** 小於Build.VERSION_CODES.KITKAT不支持device.createBond() */
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                 device.createBond();
@@ -397,7 +415,6 @@ public class MainActivity extends AppCompatActivity {
 
         }
     };
-
 
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -438,17 +455,19 @@ public class MainActivity extends AppCompatActivity {
             switch (msg.what) {
                 case Constant.MSG_START_LISTENING:
                     progressBar.setVisibility(View.VISIBLE);
+                    tv_state.setText("結束聊天.....");
                     break;
                 case Constant.MSG_FINISH_LISTENING:
                     progressBar.setVisibility(View.GONE);
                     System.out.println("MSG_FINISH_LISTENING !!!!!!!" + msg.getData());
+                    tv_state.setText("開始聊天.....");
                     break;
                 case Constant.MSG_GOT_A_CLINET:
 
                     mListView.setVisibility(View.GONE);
                     System.out.println("MSG_GOT_A_CLINET !!!!!!!" + msg.getData());
-                    System.out.println("~~~~~~~~~~~~~ !!!!!!!" + msg.obj.toString());
-                    p = msg.obj.toString();
+//                    System.out.println("~~~~~~~~~~~~~ !!!!!!!" + msg.obj.);
+//                    p = msg.obj.toString();
                     break;
                 case Constant.MSG_GOT_DATA:
 //                    progressBar.setVisibility(View.GONE);

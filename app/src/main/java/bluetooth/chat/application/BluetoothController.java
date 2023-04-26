@@ -46,9 +46,6 @@ public class BluetoothController {
             mAdapter.cancelDiscovery();
         } else {
             if (mAdapter.isEnabled()) {
-                /** bluetoothAdapter.startDiscovery();需要位置權限，但即使授予了位置權限，當它被禁用時，藍牙 API 也不起作用。
-                 所以添加，確保權限生效： **/
-
                 mAdapter.startDiscovery();
 
             }
